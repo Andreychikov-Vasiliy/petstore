@@ -1,0 +1,90 @@
+openapi: 3.0.1
+info:
+  description: 'This spec is mainly for testing Petstore server and contains fake
+    endpoints, models. Please do not use this for any other purpose. Special characters:
+    " \'
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  title: OpenAPI Petstore
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/
+tags:
+- description: Everything about your Pets
+  name: pet
+paths:
+  /pet:
+    post:
+      operationId: addPet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        description: Pet object that needs to be added to the store
+        required: true
+      responses:
+        "405":
+          content: {}
+          description: Invalid input
+      summary: Add a new pet to the store
+      tags:
+      - pet
+      x-codegen-request-body-name: body
+components:
+  schemas:
+    Pet:
+      example:
+        photoUrls:
+        - photoUrls
+        - photoUrls
+        name: doggie
+        id: 0
+        status: available
+      properties:
+        id:
+          format: int64
+          type: integer
+          x-is-unique: true
+        name:
+          example: doggie
+          type: string
+        photoUrls:
+          items:
+            type: string
+          type: array
+          xml:
+            name: photoUrl
+            wrapped: true
+        status:
+          description: pet status in the store
+          enum:
+          - available
+          - pending
+          - sold
+          type: string
+      required:
+      - name
+      - photoUrls
+      type: object
+      xml:
+        name: Pet
+    ApiResponse:
+      example:
+        code: 0
+        type: type
+        message: message
+      properties:
+        code:
+          format: int32
+          type: integer
+        type:
+          type: string
+        message:
+          type: string
+      type: object
+
